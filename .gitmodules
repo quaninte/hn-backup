@@ -1,0 +1,3 @@
+[submodule "vendors/gaufrette"]
+	path = vendors/gaufrette
+	url = https://github.com/KnpLabs/Gaufrette.git
