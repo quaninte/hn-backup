@@ -1,9 +1,9 @@
 <?php
 
 define('ROOT', __DIR__);
-define('CONFIG_DIR', __DIR__ . '/config/');
-define('HANDLERS_DIR', __DIR__ . '/handlers/');
-define('VIEWS_DIR', __DIR__ . '/views/');
+define('CONFIG_DIR', ROOT . '/config/');
+define('HANDLERS_DIR', ROOT . '/handlers/');
+define('VIEWS_DIR', ROOT . '/views/');
 
 require CONFIG_DIR . 'bootstrap.php';
 
