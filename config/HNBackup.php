@@ -4,12 +4,18 @@
  * www.brodev.com
  */
 
+use Gaufrette\Filesystem;
+use Gaufrette\Adapter\AmazonS3 as AmazonS3Adapter;
+use \AmazonS3 as AmazonClient;
+
 class HNBackup
 {
 
     protected $tmpDir;
 
     protected $settings;
+
+    protected $files = array();
 
     public function __construct($settings)
     {
@@ -48,6 +54,9 @@ class HNBackup
         // back up files
         $this->backupFiles();
 
+        // push files
+        $this->pushToBackup();
+
     }
 
     /**
@@ -56,6 +65,10 @@ class HNBackup
     protected function backupDB()
     {
         $targetFile = $this->tmpDir . 'db.sql';
+        $targetFileGz = $this->tmpDir . 'db.tgz';
+
+        $this->files[] = $targetFileGz;
+
         $cmd = $this->settings['mysqldump_path']
             . ' -h ' . $this->settings['mysql_host']
             . ' -u ' . $this->settings['mysql_user']
@@ -81,6 +94,7 @@ class HNBackup
     protected function backupFiles()
     {
         $targetFile = $this->tmpDir . 'files.tgz';
+        $this->files[] = $targetFile;
 
         $cmd = 'cd ' . $this->settings['path'] . ';' . $this->settings['tar_path'];
 
@@ -111,4 +125,30 @@ class HNBackup
         return date('Y-m-d-h-m-i') . '-' . $this->generateRandom();
     }
 
+    /**
+     * Push files to backup storage
+     */
+    protected function pushToBackup()
+    {
+        $options = array(
+            'key' => $this->settings['s3_access_key'],
+            'secret' => $this->settings['s3_secret_access_key'],
+        );
+        $s3Client = new AmazonClient($options);
+
+        $s3Adapter = new AmazonS3Adapter($s3Client, $this->settings['s3_bucket']);
+
+        $filesystem = new Filesystem($s3Adapter);
+
+        $name = $this->getBackUpName();
+
+        foreach ($this->files as $file) {
+            $backedFile = $this->settings['s3_path'] . '/' . $name . '/' . basename($file);
+            $filesystem->write($backedFile, file_get_contents($file));
+        }
+
+        // delete tmp folder
+        exec('rm -rf ' . $this->tmpDir);
+
+    }
 }

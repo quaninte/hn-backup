@@ -3,7 +3,7 @@ if (PHP_SAPI !== 'cli') {
     die('cli mode only!');
 }
 
-define('ROOT', dirname(__DIR__));
+define('ROOT', dirname(__DIR__) . '/');
 define('CONFIG_DIR', ROOT . '/config/');
 define('TMP_DIR', ROOT . '/tmp/');
 

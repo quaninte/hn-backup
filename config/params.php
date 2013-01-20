@@ -20,12 +20,20 @@ $params = array(
         'title' => 'Excluded Paths (separated by ;)',
         'value' => '',
     ),
-    'dropbox_username' => array(
-        'title' => 'Dropbox username',
+    's3_bucket' => array(
+        'title' => 'S3 Bucket',
         'value' => '',
     ),
-    'dropbox_password' => array(
-        'title' => 'Dropbox password',
+    's3_path' => array(
+        'title' => 'S3 Path',
+        'value' => 'backup',
+    ),
+    's3_access_key' => array(
+        'title' => 'S3 Access Key',
+        'value' => '',
+    ),
+    's3_secret_access_key' => array(
+        'title' => 'S3 Secret Access Key',
         'value' => '',
     ),
     'mysql_host' => array(

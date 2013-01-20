@@ -1,0 +1,6 @@
+{
+    "require": {
+        "knplabs/gaufrette": "dev-master",
+        "amazonwebservices/aws-sdk-for-php": "dev-master"
+    }
+}
