@@ -1,3 +1,5 @@
 <?php
-$username = 'admin';
-$password = 'admin';
+$config = array(
+    'username' => 'admin',
+    'password' => 'admin',
+);
