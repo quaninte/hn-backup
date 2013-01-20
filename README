@@ -24,4 +24,4 @@ Open http://yoursite-com/han-backup/ to enter settings
 #### Cron job
 
 Setup cron job
-php /path/to/han-backup/cron/cron.php
+php /path/to/hn-backup/cron/cron.php
